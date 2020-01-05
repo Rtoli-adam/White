@@ -30,19 +30,18 @@
       methods:{
         login(){
           var _this = this
-          console.log(this.$store.state.username)
           this.$axios.post('/login',{
             username: this.loginForm.username,
             password: this.loginForm.password
           }).then(successResponse => {
             if(successResponse.data.code === 200) {
-              console.log(1111111111)
               _this.$store.commit('login', _this.loginForm)
-              console.log(222222)
+              // console.log(this.$store.state.user)
               var path = this.$route.query.redirect
-              console.log(path)
+              // console.log(path)
               this.$router.push({path: path === '/' || path === undefined ? '/index' : path})
-              console.log(4444444444)
+              //手动清理store缓存
+              // _this.$store.commit('login', '')
             }
           }).catch(failResponse => {
             alert("账号或密码错误！")

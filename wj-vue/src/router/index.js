@@ -3,10 +3,13 @@ import Router from 'vue-router'
 // 导入刚才编写的组件
 import AppIndex from '@/components/home/AppIndex'
 import Login from '@/components/Login'
+import Home from '@/components/Home'
+import LibraryIndex from '@/components/library/LibraryIndex'
+import store from "../stroe";
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     // 下面都是固定的写法
@@ -16,12 +19,45 @@ export default new Router({
       component: Login
     },
     {
-      path: '/index',
-      name: 'AppIndex',
-      component: AppIndex,
-      meta: {
-        requireAuth: true
-      }
+      path: '/home',
+      name: 'Home',
+      component: Home,
+      redirect: '/index',
+      children: [
+        {
+          path: '/index',
+          name: 'AppIndex',
+          component: AppIndex,
+          meta: {
+            requireAuth: true
+          }
+        },
+        {
+          path: '/library',
+          name: 'Library',
+          component: LibraryIndex,
+          meta: {
+            requireAuth: true
+          }
+        }
+      ]
     }
   ]
 })
+
+router.beforeEach((to, from , next) =>{
+  if (to.meta.requireAuth) {
+    if (store.state.user.username){
+      next()
+    }else{
+      next({
+        path: '/login',
+        query: {redirect: to.fullPath}
+      })
+    }
+  }else{
+    next()
+  }
+})
+
+export default router
