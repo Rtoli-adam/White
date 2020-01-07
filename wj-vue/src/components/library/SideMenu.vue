@@ -59,8 +59,7 @@
 <style scoped>
   .categories {
     position: fixed;
-    margin-left: 50%;
-    left: -400px;
+    margin-left: 2%;
     top: 100px;
     width: 150px;
   }

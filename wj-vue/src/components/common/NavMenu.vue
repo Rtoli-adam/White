@@ -1,12 +1,12 @@
 <template>
   <el-menu
-    :default-active="'/index'"
+    :default-active="this.$route.path"
     router
     mode="horizontal"
     background-color="white"
     text-color="#222"
     active-text-color="red"
-    style="min-width: 1300px">
+    style="width: 100%;position: fixed;z-index: 999">
     <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
       {{ item.navItem }}
     </el-menu-item>

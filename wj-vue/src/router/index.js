@@ -3,6 +3,7 @@ import Router from 'vue-router'
 // 导入刚才编写的组件
 import AppIndex from '@/components/home/AppIndex'
 import Login from '@/components/Login'
+import Register from '@/components/Register'
 import Home from '@/components/Home'
 import LibraryIndex from '@/components/library/LibraryIndex'
 import store from "../stroe";
@@ -14,9 +15,23 @@ const router = new Router({
   routes: [
     // 下面都是固定的写法
     {
+      path: '/',
+      name: 'AppIndex',
+      redirect: '/index',
+      component: AppIndex,
+      meta:{
+        requireAuth: true
+      }
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
       path: '/home',

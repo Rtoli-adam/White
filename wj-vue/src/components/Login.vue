@@ -3,13 +3,14 @@
     <el-form class="login-container" label-position="left" label-width="0px">
       <h3 class="login_title">系统登陆</h3>
       <el-form-item>
-        <el-input type="text" v-model="loginForm.username" auto-complete="off" aria-placeholder="账号"></el-input>
+        <el-input type="text" v-model="loginForm.username" auto-complete="off" placeholder="账号" ref="username"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-input type="text" v-model="loginForm.password" auto-complete="off" aria-placeholder="密码"></el-input>
+        <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码" ref="password"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" style="width: 100%;background-color: #505458;border: none;" @click="login">登录</el-button>
+        <router-link to="register"><el-button type="primary" style="width: 100%;background-color: #505458;border: none;">注册</el-button></router-link>
       </el-form-item>
     </el-form>
   </body>
@@ -27,8 +28,25 @@
           responseResult: []
         }
       },
+      mounted() {
+        this.$refs.username.focus();
+      },
       methods:{
         login(){
+          if (!this.loginForm.username){
+            this.$alert('请填入用户名','提示',{
+              confirmButtonText: '确定'
+            })
+            this.$refs.username.focus();
+            return false;
+          }
+          if (!this.loginForm.password){
+            this.$alert('请填入密码','提示',{
+              confirmButtonText: '确定'
+            })
+            this.$refs.password.focus();
+            return false;
+          }
           var _this = this
           this.$axios.post('/login',{
             username: this.loginForm.username,
@@ -42,6 +60,10 @@
               this.$router.push({path: path === '/' || path === undefined ? '/index' : path})
               //手动清理store缓存
               // _this.$store.commit('login', '')
+            }else{
+              this.$alert(successResponse.data.message,'提示',{
+                confirmButtonText: '确定'
+              })
             }
           }).catch(failResponse => {
             alert("账号或密码错误！")
@@ -52,6 +74,9 @@
 </script>
 
 <style scoped>
+  body{
+    margin: 0px;
+  }
   .login-container{
     border-radius: 15px;
     background-clip: padding-box;
