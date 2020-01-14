@@ -13,7 +13,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class WjRealm extends AuthorizingRealm {
+public class WJRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;

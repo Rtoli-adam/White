@@ -10,10 +10,7 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.UUID;
@@ -23,6 +20,12 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    @ResponseBody
+    @GetMapping("api/authentication")
+    public String authentication(){
+        return "身份验证成功!";
+    }
 
     @CrossOrigin
     @PostMapping(value = "api/login")
@@ -34,6 +37,7 @@ public class LoginController {
         Subject subject = SecurityUtils.getSubject();
 
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, requestUser.getPassword());
+        usernamePasswordToken.setRememberMe(true);
         try {
             subject.login(usernamePasswordToken);
             return ResultFactory.buildSuccessResult(usernamePasswordToken);
@@ -52,6 +56,15 @@ public class LoginController {
 //            }
 //            return new Result(400,"账号或密码不正确","");
 //        }
+    }
+
+    @ResponseBody
+    @GetMapping("api/logout")
+    public Result logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        String message = "退出成功!";
+        return ResultFactory.buildSuccessResult(message);
     }
 
     @PostMapping("api/register")
