@@ -61,7 +61,7 @@
     position: fixed;
     margin-left: 2%;
     top: 100px;
-    width: 150px;
+    width: 200px;
   }
 </style>
 

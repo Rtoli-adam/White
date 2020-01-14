@@ -50,7 +50,7 @@
       return {
         books: [],
         currentPage: 1,
-        pagesize: 7
+        pagesize: 13
       }
     },
     mounted: function(){
@@ -92,6 +92,7 @@
             this.$axios
               .post('/delete', {id: id}).then(resp => {
               if (resp && resp.status === 200) {
+                console.log("===============cids"+this.cids)
                 this.loadCategoryBooks()
               }
             })

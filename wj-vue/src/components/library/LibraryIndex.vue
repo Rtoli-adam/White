@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside style="width: 200px;margin-top: 20px">
+    <el-aside style="width: 250px;margin-top: 20px">
       <switch></switch>
       <SideMenu @indexSelect="listByCategory" ref="sideMenu"></SideMenu>
     </el-aside>
@@ -17,7 +17,7 @@
     name: 'AppLibrary',
     data(){
       return{
-        cid: ''
+        cid: 0
       }
     },
     components: {SideMenu, Books},
@@ -39,7 +39,7 @@
 
 <style scoped>
   .books-area {
-    width: 990px;
+    width: 96%;
     margin-left: auto;
     margin-right: auto;
   }
